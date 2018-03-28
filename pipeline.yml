@@ -1,0 +1,21 @@
+resources:
+- name: git-resource
+  type: git
+  source:
+    uri: https://github.com/MarkKropf/cf-local-docker
+    branch: master
+
+- name: git-resource-image
+  type: docker-image
+  source:
+    repository: gcr.io/spo-mkropf/cf-local-docker
+    username: _json_key
+    password: {{spo-mkropf-json}}
+
+jobs:
+- name: build-rootfs
+  plan:
+  - get: git-resource
+  - put: git-resource-image
+    params: {build: git-resource}
+    get_params: {rootfs: true}
