@@ -16,6 +16,7 @@ jobs:
 - name: build-rootfs
   plan:
   - get: git-resource
+    trigger: true
   - put: git-resource-image
     params: {build: git-resource}
     get_params: {rootfs: true}
